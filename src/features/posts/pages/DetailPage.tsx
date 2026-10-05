@@ -39,12 +39,12 @@ export default function DetailPage({ postId }: { postId: number }) {
     }
   };
 
-  if (isPost && !post) return <div className="py-20 text-center text-sm text-[var(--muted)]"><h1 className="sr-only">Detail cerita</h1>Memuat cerita…</div>;
-  if (!post) return <div className="py-20 text-center"><h1 className="font-bold">Postingan tidak ditemukan.</h1><Link href="/" className="mt-3 inline-block text-sm text-[var(--green)]">Kembali ke linimasa</Link></div>;
+  if (isPost && !post) return <main className="py-20 text-center text-sm text-[var(--muted)]" aria-labelledby="detail-loading-title"><h1 id="detail-loading-title" className="sr-only">Detail cerita</h1>Memuat cerita…</main>;
+  if (!post) return <main className="py-20 text-center" aria-labelledby="detail-not-found-title"><h1 id="detail-not-found-title" className="font-bold">Postingan tidak ditemukan.</h1><Link href="/" className="mt-3 inline-block text-sm text-[var(--green)]">Kembali ke linimasa</Link></main>;
 
   return (
-    <article className="mx-auto max-w-[820px]">
-      <h1 className="sr-only">Cerita dari {post.author?.name ?? "Anggota Delcom"}</h1>
+    <main className="mx-auto max-w-[820px]" aria-labelledby="detail-page-title">
+      <h1 id="detail-page-title" className="sr-only">Cerita dari {post.author?.name ?? "Anggota Delcom"}</h1>
       <Link href="/" className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-[var(--muted)] hover:text-[var(--green)]"><FiArrowLeft /> Kembali ke linimasa</Link>
       <div className="overflow-hidden rounded-[28px] border border-[var(--line)] bg-white">
         <div className="flex items-center gap-3 p-5 sm:p-7">
@@ -85,6 +85,6 @@ export default function DetailPage({ postId }: { postId: number }) {
       <ChangeModal open={editOpen} initialValue={post.description} busy={busy} onClose={() => setEditOpen(false)} onSubmit={(description) => { void withFeedback(async () => { await dispatch(editPost({ id: post.id, description })).unwrap(); setEditOpen(false); }, "Postingan berhasil diperbarui."); }} />
       <ChangeCoverModal open={coverOpen} busy={busy} onClose={() => setCoverOpen(false)} onSubmit={(cover) => { void withFeedback(async () => { await dispatch(editPostCover({ id: post.id, cover })).unwrap(); setCoverOpen(false); }, "Cover berhasil diperbarui."); }} />
       <span className="sr-only"><FiMoreHorizontal /></span>
-    </article>
+    </main>
   );
 }

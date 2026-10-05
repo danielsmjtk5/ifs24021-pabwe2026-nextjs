@@ -32,9 +32,9 @@ export default function ProfilePage() {
     }
   };
 
-  if (!profile) return <div className="py-16 text-center"><h1 className="sr-only">Pengaturan profil</h1><p className="text-sm text-[var(--muted)]">Memuat profil…</p></div>;
+  if (!profile) return <main className="py-16 text-center" aria-labelledby="profile-loading-title"><h1 id="profile-loading-title" className="sr-only">Pengaturan profil</h1><p className="text-sm text-[var(--muted)]">Memuat profil…</p></main>;
   return (
-    <div className="mx-auto max-w-[900px]">
+    <main className="mx-auto max-w-[900px]" aria-labelledby="profile-page-title">
       <div className="mb-8"><p className="text-xs font-extrabold uppercase tracking-[.18em] text-[var(--green)]">Ruang pribadimu</p><h1 className="mt-2 text-3xl font-extrabold tracking-tight">Pengaturan profil.</h1><p className="mt-2 text-sm text-[var(--muted)]">Perbarui informasi akun dan cara orang mengenalmu.</p></div>
       <div className="grid gap-5 lg:grid-cols-[.8fr_1.2fr]">
         <section className="rounded-[24px] border border-[var(--line)] bg-white p-6">
@@ -62,6 +62,6 @@ export default function ProfilePage() {
           </form>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

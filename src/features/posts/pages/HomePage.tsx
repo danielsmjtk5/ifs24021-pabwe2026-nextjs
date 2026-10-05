@@ -43,8 +43,8 @@ export default function HomePage() {
   };
 
   return (
-    <div className="mx-auto max-w-[1050px]">
-      <h1 className="sr-only">Linimasa cerita komunitas</h1>
+    <main className="mx-auto max-w-[1050px]" aria-labelledby="home-page-title">
+      <h1 id="home-page-title" className="sr-only">Linimasa cerita komunitas</h1>
       <section className="relative mb-8 overflow-hidden rounded-[28px] bg-[#154f41] px-6 py-8 text-white sm:px-10 sm:py-10">
         <div className="absolute -right-14 -top-32 size-80 rounded-full border border-white/10" /><div className="absolute -right-5 -top-24 size-64 rounded-full border border-white/10" />
         <div className="relative z-10 flex flex-col justify-between gap-8 md:flex-row md:items-end">
@@ -68,6 +68,6 @@ export default function HomePage() {
       </div>
       {isPost && posts.length === 0 ? <div className="grid min-h-60 place-items-center rounded-3xl border border-[var(--line)] bg-white text-sm text-[var(--muted)]">Memuat cerita…</div> : filteredPosts.length ? <div className="grid gap-5 md:grid-cols-2">{filteredPosts.map((post) => <PostCard key={post.id} post={post} />)}</div> : <div className="rounded-3xl border border-dashed border-[#d7e1d7] bg-white px-6 py-16 text-center"><span className="mx-auto grid size-14 place-items-center rounded-2xl bg-[#eff5e9] text-2xl text-[var(--green)]"><FiEdit3 /></span><h3 className="mt-4 text-lg font-extrabold">{query ? "Cerita tidak ditemukan" : "Belum ada cerita di sini"}</h3><p className="mt-2 text-sm text-[var(--muted)]">{query ? "Coba kata pencarian yang lain." : "Jadilah yang pertama berbagi cerita hari ini."}</p>{!query && <button onClick={() => setModalOpen(true)} className="mt-5 text-sm font-bold text-[var(--green)]">Mulai menulis <FiArrowRight className="ml-1 inline" /></button>}</div>}
       <AddModal open={modalOpen} busy={isPostAdd} onClose={() => setModalOpen(false)} onSubmit={submitPost} />
-    </div>
+    </main>
   );
 }

@@ -17,7 +17,7 @@ export default function UsersPage() {
   const filtered = useMemo(() => users.filter((user) => `${user.name} ${user.email}`.toLowerCase().includes(query.toLowerCase())), [users, query]);
 
   return (
-    <div className="mx-auto max-w-[1000px]">
+    <main className="mx-auto max-w-[1000px]" aria-labelledby="users-page-title">
       <div className="mb-8 rounded-[28px] bg-[#eaf2e6] p-7 sm:p-10">
         <p className="text-xs font-extrabold uppercase tracking-[.18em] text-[var(--green)]">Tumbuh bersama</p>
         <h1 className="mt-2 text-3xl font-extrabold tracking-tight">Kenali komunitasmu.</h1>
@@ -61,6 +61,6 @@ export default function UsersPage() {
       ) : (
         <div className="rounded-3xl bg-white p-12 text-center text-sm text-[var(--muted)]">Tidak ada anggota yang cocok dengan pencarianmu.</div>
       )}
-    </div>
+    </main>
   );
 }

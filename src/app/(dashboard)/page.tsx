@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Page() {
   return (
-    <section className="min-h-screen p-6" aria-labelledby="dashboard-intro-title">
+    <main className="min-h-screen p-6" aria-labelledby="dashboard-intro-title">
       <h1 id="dashboard-intro-title" className="sr-only">Platform Komunitas Berbagi Baik</h1>
 
       <div className="mx-auto max-w-md">
@@ -21,6 +21,6 @@ export default function Page() {
           Berbagi dengan baik, tumbuh bersama.
         </p>
       </div>
-    </section>
+    </main>
   );
 }
