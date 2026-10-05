@@ -7,5 +7,12 @@ export function useInput(initialValue = "") {
   const onChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => setValue(event.currentTarget.value);
-  return { value, onChange, setValue };
+
+  const input = { value, onChange };
+  Object.defineProperty(input, "setValue", {
+    value: setValue,
+    enumerable: false,
+  });
+
+  return input as typeof input & { setValue: typeof setValue };
 }

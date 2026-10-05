@@ -37,7 +37,7 @@ export default function SidebarComponent({
             <FiX className="text-xl" />
           </button>
         </div>
-        <p className="mb-3 px-3 text-[11px] font-extrabold uppercase tracking-[.18em] text-[#a0aaa4]">
+        <p className="mb-3 px-3 text-[11px] font-extrabold uppercase tracking-[.18em] text-[var(--muted)]">
           Menu utama
         </p>
         <nav className="space-y-1">
@@ -53,7 +53,7 @@ export default function SidebarComponent({
                 href={href}
                 key={label}
                 onClick={onClose}
-                className={`flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-semibold transition ${active ? "bg-[#edf5e8] text-[var(--green)]" : "text-[#697773] hover:bg-[#f6f8f5]"}`}
+                className={`flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-semibold transition ${active ? "bg-[#edf5e8] text-[var(--green)]" : "text-[var(--muted)] hover:bg-[#f6f8f5]"}`}
               >
                 <Icon className="text-[19px]" />
                 {label}
@@ -76,7 +76,7 @@ export default function SidebarComponent({
         <Link
           href="/profile"
           onClick={onClose}
-          className={`mt-3 flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-semibold transition ${pathname.startsWith("/profile") ? "bg-[#edf5e8] text-[var(--green)]" : "text-[#697773] hover:bg-[#f6f8f5]"}`}
+          className={`mt-3 flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-semibold transition ${pathname.startsWith("/profile") ? "bg-[#edf5e8] text-[var(--green)]" : "text-[var(--muted)] hover:bg-[#f6f8f5]"}`}
         >
           <FiUser className="text-[19px]" />
           Profil saya
