@@ -32,7 +32,7 @@ export default function ProfilePage() {
     }
   };
 
-  if (!profile) return <p className="py-16 text-center text-sm text-[var(--muted)]">Memuat profil…</p>;
+  if (!profile) return <div className="py-16 text-center"><h1 className="sr-only">Pengaturan profil</h1><p className="text-sm text-[var(--muted)]">Memuat profil…</p></div>;
   return (
     <div className="mx-auto max-w-[900px]">
       <div className="mb-8"><p className="text-xs font-extrabold uppercase tracking-[.18em] text-[var(--green)]">Ruang pribadimu</p><h1 className="mt-2 text-3xl font-extrabold tracking-tight">Pengaturan profil.</h1><p className="mt-2 text-sm text-[var(--muted)]">Perbarui informasi akun dan cara orang mengenalmu.</p></div>

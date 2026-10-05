@@ -44,6 +44,7 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto max-w-[1050px]">
+      <h1 className="sr-only">Linimasa cerita komunitas</h1>
       <section className="relative mb-8 overflow-hidden rounded-[28px] bg-[#154f41] px-6 py-8 text-white sm:px-10 sm:py-10">
         <div className="absolute -right-14 -top-32 size-80 rounded-full border border-white/10" /><div className="absolute -right-5 -top-24 size-64 rounded-full border border-white/10" />
         <div className="relative z-10 flex flex-col justify-between gap-8 md:flex-row md:items-end">
@@ -59,7 +60,10 @@ export default function HomePage() {
         </div>
       </div>
       <div className="mb-6 flex flex-col gap-3 sm:flex-row">
-        <label className="flex h-12 flex-1 items-center gap-3 rounded-2xl border border-[var(--line)] bg-white px-4 text-[var(--muted)]"><FiSearch className="text-lg" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Cari cerita atau penulis…" className="w-full bg-transparent text-sm text-[var(--ink)] outline-none placeholder:text-[#a4ada7]" /></label>
+        <label className="flex h-12 flex-1 items-center gap-3 rounded-2xl border border-[var(--line)] bg-white px-4 text-[var(--muted)]">
+          <FiSearch className="text-lg" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Cari cerita atau penulis…" className="w-full bg-transparent text-sm text-[var(--ink)] outline-none placeholder:text-[var(--muted)]" />
+        </label>
         <Link href="/users" className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-[var(--line)] bg-white px-5 text-sm font-bold text-[var(--green)]"><FiUsers /> Jelajahi komunitas <FiArrowRight /></Link>
       </div>
       {isPost && posts.length === 0 ? <div className="grid min-h-60 place-items-center rounded-3xl border border-[var(--line)] bg-white text-sm text-[var(--muted)]">Memuat cerita…</div> : filteredPosts.length ? <div className="grid gap-5 md:grid-cols-2">{filteredPosts.map((post) => <PostCard key={post.id} post={post} />)}</div> : <div className="rounded-3xl border border-dashed border-[#d7e1d7] bg-white px-6 py-16 text-center"><span className="mx-auto grid size-14 place-items-center rounded-2xl bg-[#eff5e9] text-2xl text-[var(--green)]"><FiEdit3 /></span><h3 className="mt-4 text-lg font-extrabold">{query ? "Cerita tidak ditemukan" : "Belum ada cerita di sini"}</h3><p className="mt-2 text-sm text-[var(--muted)]">{query ? "Coba kata pencarian yang lain." : "Jadilah yang pertama berbagi cerita hari ini."}</p>{!query && <button onClick={() => setModalOpen(true)} className="mt-5 text-sm font-bold text-[var(--green)]">Mulai menulis <FiArrowRight className="ml-1 inline" /></button>}</div>}

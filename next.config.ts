@@ -1,14 +1,9 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  turbopack: { root: process.cwd() },
-  poweredByHeader: false,
-  images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "open-api.delcom.org" },
-      { protocol: "http", hostname: "127.0.0.1" },
-    ],
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    optimizeCss: true, // Meng-inline CSS kritis dan menunda CSS yang belum diperlukan
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

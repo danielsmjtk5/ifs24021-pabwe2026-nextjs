@@ -71,7 +71,7 @@ export default function AuthLayout({ children }: Readonly<{ children: React.Reac
             ruangcerita
           </Link>
           {children}
-          <p className="mt-10 text-center text-xs text-[#a2aca6]">
+         <p className="mt-10 text-center text-xs text-[var(--muted)]">
             Berbagi dengan baik, tumbuh bersama.
             <FiArrowUpRight className="ml-1 inline" />
           </p>

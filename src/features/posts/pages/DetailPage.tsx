@@ -39,11 +39,12 @@ export default function DetailPage({ postId }: { postId: number }) {
     }
   };
 
-  if (isPost && !post) return <div className="py-20 text-center text-sm text-[var(--muted)]">Memuat cerita…</div>;
-  if (!post) return <div className="py-20 text-center"><p className="font-bold">Postingan tidak ditemukan.</p><Link href="/" className="mt-3 inline-block text-sm text-[var(--green)]">Kembali ke linimasa</Link></div>;
+  if (isPost && !post) return <div className="py-20 text-center text-sm text-[var(--muted)]"><h1 className="sr-only">Detail cerita</h1>Memuat cerita…</div>;
+  if (!post) return <div className="py-20 text-center"><h1 className="font-bold">Postingan tidak ditemukan.</h1><Link href="/" className="mt-3 inline-block text-sm text-[var(--green)]">Kembali ke linimasa</Link></div>;
 
   return (
     <article className="mx-auto max-w-[820px]">
+      <h1 className="sr-only">Cerita dari {post.author?.name ?? "Anggota Delcom"}</h1>
       <Link href="/" className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-[var(--muted)] hover:text-[var(--green)]"><FiArrowLeft /> Kembali ke linimasa</Link>
       <div className="overflow-hidden rounded-[28px] border border-[var(--line)] bg-white">
         <div className="flex items-center gap-3 p-5 sm:p-7">
@@ -57,7 +58,7 @@ export default function DetailPage({ postId }: { postId: number }) {
         <div className="p-5 sm:p-7">
           <p className="whitespace-pre-wrap text-[15px] leading-7 text-[#354541]">{post.description}</p>
           <div className="mt-7 flex items-center gap-4 border-y border-[var(--line)] py-4">
-            <button disabled={busy} onClick={() => void withFeedback(() => dispatch(changePostLike({ id: post.id, like: !liked })).unwrap(), liked ? "Like dibatalkan." : "Kamu menyukai cerita ini.")} className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition ${liked ? "bg-[#fff0ef] text-[#d85d54]" : "bg-[#f5f7f3] text-[var(--muted)] hover:text-[#d85d54]"}`}><FiHeart /> {post.likes?.length ?? 0} suka</button>
+            <button disabled={busy} onClick={() => void withFeedback(() => dispatch(changePostLike({ id: post.id, like: !liked })).unwrap(), liked ? "Like dibatalkan." : "Kamu menyukai cerita ini.")} className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition ${liked ? "bg-[#fff0ef] text-[#b42318]" : "bg-[#f5f7f3] text-[var(--muted)] hover:text-[#b42318]"}`}><FiHeart /> {post.likes?.length ?? 0} suka</button>
             <span className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--muted)]"><FiMessageCircle /> {post.comments?.length ?? 0} komentar</span>
           </div>
           <form className="mt-5 flex gap-3" onSubmit={(event) => { event.preventDefault(); if (comment.trim()) void withFeedback(async () => { await dispatch(createComment({ id: post.id, comment: comment.trim() })).unwrap(); setComment(""); }, "Komentar berhasil dikirim."); }}>
@@ -72,7 +73,7 @@ export default function DetailPage({ postId }: { postId: number }) {
                   <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#edf4e9] text-xs font-bold text-[var(--green)]">{item.author?.name?.slice(0, 1) ?? "U"}</span>
                   <div className="min-w-0 flex-1 rounded-2xl bg-[#f6f8f5] px-4 py-3">
                     <div className="flex items-center justify-between gap-3"><p className="text-xs font-extrabold">{item.author?.name ?? "Anggota Delcom"}</p>{post.my_comment?.id === item.id && <button aria-label="Hapus komentar" onClick={() => void withFeedback(() => dispatch(removeComment(post.id)).unwrap(), "Komentar dihapus.")} className="text-[var(--muted)] hover:text-red-500"><FiTrash2 /></button>}</div>
-                    <p className="mt-1 text-sm leading-6 text-[#53615d]">{item.comment}</p><p className="mt-2 text-[10px] text-[#9ca7a0]">{formatDate(item.created_at)}</p>
+                    <p className="mt-1 text-sm leading-6 text-[#53615d]">{item.comment}</p><p className="mt-2 text-[10px] text-[var(--muted)]">{formatDate(item.created_at)}</p>
                   </div>
                 </div>
               ))}
