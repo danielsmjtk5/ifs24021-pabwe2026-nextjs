@@ -1,5 +1,5 @@
 "use client";
-<h1 className="sr-only">Menyiapkan ruang ceritamu</h1>
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAccessToken, putAccessToken } from "@/helpers/apiHelper";
@@ -32,6 +32,7 @@ export default function PostLayout({ children }: Readonly<{ children: React.Reac
   if (!ready || !profile) {
     return (
       <main className="grid min-h-screen place-items-center bg-[var(--paper)]">
+        <h1 className="sr-only">Menyiapkan ruang ceritamu</h1>
         <div className="flex items-center gap-3 text-sm font-semibold text-[var(--muted)]">
           <span className="size-5 animate-spin rounded-full border-2 border-[#dbe5dc] border-t-[var(--green)]" />
           Menyiapkan ruang ceritamu…
@@ -42,6 +43,7 @@ export default function PostLayout({ children }: Readonly<{ children: React.Reac
 
   return (
     <div className="min-h-screen">
+      <h1 className="sr-only">Menyiapkan ruang ceritamu</h1>
       <NavbarComponent onMenuClick={() => setMenuOpen(true)} />
       <div className="mx-auto flex max-w-[1440px]">
         <SidebarComponent open={menuOpen} onClose={() => setMenuOpen(false)} />

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import Script from 'next/script';
+import StoreProvider from '@/StoreProvider'; // <-- Tambahkan baris ini
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -22,7 +23,11 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${plusJakartaSans.variable} h-full antialiased`}>
       <body className="h-full bg-white text-gray-900">
-        {children}
+        
+        {/* Bungkus seluruh aplikasi dengan Redux Provider */}
+        <StoreProvider>
+          {children}
+        </StoreProvider>
 
         {/* Memuat skrip Netlify HUD secara lazyOnload untuk efisiensi jaringan & cache */}
         <Script
