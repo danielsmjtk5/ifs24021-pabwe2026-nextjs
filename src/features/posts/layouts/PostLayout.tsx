@@ -31,13 +31,13 @@ export default function PostLayout({ children }: Readonly<{ children: React.Reac
 
   if (!ready || !profile) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[var(--paper)]">
+      <div className="grid min-h-screen place-items-center bg-[var(--paper)]" aria-live="polite">
         <h1 className="sr-only">Menyiapkan ruang ceritamu</h1>
         <div className="flex items-center gap-3 text-sm font-semibold text-[var(--muted)]">
           <span className="size-5 animate-spin rounded-full border-2 border-[#dbe5dc] border-t-[var(--green)]" />
           Menyiapkan ruang ceritamu…
         </div>
-      </main>
+      </div>
     );
   }
 
@@ -47,7 +47,7 @@ export default function PostLayout({ children }: Readonly<{ children: React.Reac
       <NavbarComponent onMenuClick={() => setMenuOpen(true)} />
       <div className="mx-auto flex max-w-[1440px]">
         <SidebarComponent open={menuOpen} onClose={() => setMenuOpen(false)} />
-        <main className="min-w-0 flex-1 px-5 py-8 sm:px-8 lg:px-10">{children}</main>
+        <div className="min-w-0 flex-1 px-5 py-8 sm:px-8 lg:px-10">{children}</div>
       </div>
     </div>
   );
