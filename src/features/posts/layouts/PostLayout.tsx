@@ -34,7 +34,7 @@ export default function PostLayout({ children }: Readonly<{ children: React.Reac
       <main className="grid min-h-screen place-items-center bg-[var(--paper)]" aria-live="polite">
         <h1 className="sr-only">Menyiapkan ruang ceritamu</h1>
         <div className="flex items-center gap-3 text-sm font-semibold text-[var(--muted)]">
-          <span className="size-5 animate-spin rounded-full border-2 border-[#dbe5dc] border-t-[var(--green)]" />
+          <span className="size-5 animate-spin rounded-full border-2 border-[#dbe5dc] border-t-[var(--green)]" />{" "}
           Menyiapkan ruang ceritamu…
         </div>
       </main>

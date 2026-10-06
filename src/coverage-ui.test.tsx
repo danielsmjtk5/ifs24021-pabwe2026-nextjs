@@ -360,7 +360,8 @@ describe("ui coverage suite", () => {
     expect(screen.getByRole("button", { name: "Menyimpan…" })).toBeDisabled();
     fireEvent.submit(modal.container.querySelector("form")!);
     expect(onSubmit).not.toHaveBeenCalled();
-    fireEvent.mouseDown(modal.container.firstElementChild!, { target: modal.container.firstElementChild });
+    expect(screen.getByRole("dialog", { name: "Draft" })).toHaveAttribute("aria-modal", "true");
+    fireEvent.click(screen.getByRole("button", { name: "Tutup dialog" }));
     expect(onClose).toHaveBeenCalledTimes(1);
     fireEvent.click(screen.getByRole("button", { name: "Tutup" }));
     expect(onClose).toHaveBeenCalledTimes(2);

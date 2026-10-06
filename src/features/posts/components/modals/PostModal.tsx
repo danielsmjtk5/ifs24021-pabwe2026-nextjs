@@ -24,16 +24,25 @@ export default function PostModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] grid place-items-center bg-[#10211f]/45 p-4 backdrop-blur-sm" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
+    <div className="fixed inset-0 z-[60] grid place-items-center p-4">
+      <button
+        type="button"
+        aria-label="Tutup dialog"
+        onClick={onClose}
+        className="absolute inset-0 h-full w-full cursor-default border-0 bg-[#10211f]/45 p-0 backdrop-blur-sm"
+      />
       <form
-        className="w-full max-w-lg rounded-[28px] bg-white p-6 shadow-2xl sm:p-8"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="post-modal-title"
+        className="relative z-10 w-full max-w-lg rounded-[28px] bg-white p-6 shadow-2xl sm:p-8"
         onSubmit={(event) => {
           event.preventDefault();
           if (value.trim()) onSubmit(value.trim());
         }}
       >
         <div className="mb-6 flex items-center justify-between">
-          <div><p className="text-xs font-extrabold uppercase tracking-[.16em] text-[var(--green)]">Ruang berbagi</p><h2 className="mt-1 text-xl font-extrabold">{title}</h2></div>
+          <div><p className="text-xs font-extrabold uppercase tracking-[.16em] text-[var(--green)]">Ruang berbagi</p><h2 id="post-modal-title" className="mt-1 text-xl font-extrabold">{title}</h2></div>
           <button type="button" onClick={onClose} aria-label="Tutup" className="grid size-10 place-items-center rounded-full bg-[#f4f6f3] text-xl"><FiX /></button>
         </div>
         <label htmlFor="post-description" className="mb-2 block text-sm font-bold">Apa yang ingin kamu ceritakan?</label>

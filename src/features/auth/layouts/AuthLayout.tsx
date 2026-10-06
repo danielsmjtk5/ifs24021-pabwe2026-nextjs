@@ -35,7 +35,7 @@ export default function AuthLayout({ children }: Readonly<{ children: React.Reac
         <div className="absolute -right-12 -top-10 size-[300px] rounded-full border border-white/10" />
         <div className="relative z-10">
           <Link href="/auth/login" className="flex items-center gap-3 text-lg font-extrabold">
-            <span className="grid size-10 place-items-center rounded-2xl bg-[var(--lime)] text-xl text-[#173e32]">R</span>
+            <span className="grid size-10 place-items-center rounded-2xl bg-[var(--lime)] text-xl text-[#173e32]">R</span>{" "}
             ruangcerita
           </Link>
           <div className="mt-28 max-w-xl">
@@ -67,7 +67,7 @@ export default function AuthLayout({ children }: Readonly<{ children: React.Reac
       <section className="flex min-h-screen items-center justify-center px-5 py-12 sm:px-10">
         <div className="w-full max-w-[430px]">
           <Link href="/auth/login" className="mb-12 flex items-center gap-2 font-extrabold lg:hidden">
-            <span className="grid size-9 place-items-center rounded-xl bg-[var(--green)] text-lg text-white">R</span>
+            <span className="grid size-9 place-items-center rounded-xl bg-[var(--green)] text-lg text-white">R</span>{" "}
             ruangcerita
           </Link>
           {children}
