@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { FiX } from "react-icons/fi";
 import { useInput } from "@/hooks/useInput";
 
@@ -20,22 +20,34 @@ export default function PostModal({
   onSubmit: (description: string) => void;
 }) {
   const { value, onChange, setValue } = useInput(initialValue);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => setValue(initialValue), [initialValue, open, setValue]);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!open || !dialog) return;
+
+    dialog.showModal();
+    return () => {
+      if (dialog.open) dialog.close();
+    };
+  }, [open]);
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] grid place-items-center p-4">
-      <button
-        type="button"
-        aria-label="Tutup dialog"
-        onClick={onClose}
-        className="absolute inset-0 h-full w-full cursor-default border-0 bg-[#10211f]/45 p-0 backdrop-blur-sm"
-      />
+    <dialog
+      ref={dialogRef}
+      aria-labelledby="post-modal-title"
+      className="fixed inset-0 z-[60] m-0 grid h-dvh w-screen max-h-none max-w-none place-items-center overflow-visible border-0 bg-transparent p-4 backdrop:bg-[#10211f]/45 backdrop:backdrop-blur-sm"
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+    >
       <form
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="post-modal-title"
-        className="relative z-10 w-full max-w-lg rounded-[28px] bg-white p-6 shadow-2xl sm:p-8"
+        className="w-full max-w-lg rounded-[28px] bg-white p-6 shadow-2xl sm:p-8"
         onSubmit={(event) => {
           event.preventDefault();
           if (value.trim()) onSubmit(value.trim());
@@ -53,6 +65,6 @@ export default function PostModal({
           <button disabled={busy || !value.trim()} className="rounded-xl bg-[var(--green)] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0f5948] disabled:opacity-50">{busy ? "Menyimpan…" : "Publikasikan"}</button>
         </div>
       </form>
-    </div>
+    </dialog>
   );
 }

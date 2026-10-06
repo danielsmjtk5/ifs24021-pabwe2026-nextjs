@@ -57,6 +57,19 @@ const mockGetAccessToken = vi.fn();
 const mockPutAccessToken = vi.fn();
 const mockGetProfile = vi.fn();
 
+Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
+  configurable: true,
+  value: function (this: HTMLDialogElement) {
+    this.setAttribute("open", "");
+  },
+});
+Object.defineProperty(HTMLDialogElement.prototype, "close", {
+  configurable: true,
+  value: function (this: HTMLDialogElement) {
+    this.removeAttribute("open");
+  },
+});
+
 vi.mock("next/font/google", () => ({
   Plus_Jakarta_Sans: () => ({ variable: "--font-plus-jakarta" }),
 }));
@@ -360,11 +373,16 @@ describe("ui coverage suite", () => {
     expect(screen.getByRole("button", { name: "Menyimpan…" })).toBeDisabled();
     fireEvent.submit(modal.container.querySelector("form")!);
     expect(onSubmit).not.toHaveBeenCalled();
-    expect(screen.getByRole("dialog", { name: "Draft" })).toHaveAttribute("aria-modal", "true");
-    fireEvent.click(screen.getByRole("button", { name: "Tutup dialog" }));
+    const dialog = screen.getByRole("dialog", { name: "Draft" }) as HTMLDialogElement;
+    expect(dialog.tagName).toBe("DIALOG");
+    fireEvent.click(dialog);
     expect(onClose).toHaveBeenCalledTimes(1);
     fireEvent.click(screen.getByRole("button", { name: "Tutup" }));
     expect(onClose).toHaveBeenCalledTimes(2);
+    fireEvent(dialog, new Event("cancel", { bubbles: true, cancelable: true }));
+    expect(onClose).toHaveBeenCalledTimes(3);
+    dialog.close();
+    modal.rerender(<PostModal open={false} title="Draft" onClose={onClose} onSubmit={onSubmit} />);
   });
 
   it("renders a post card with a remote author photo and malformed optional fields", () => {
