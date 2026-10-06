@@ -58,7 +58,7 @@ pipeline {
         stage('Test') {
             agent {
                 docker {
-                    image 'node:24-alpine'
+                    image 'oven/bun:alpine'
                     reuseNode true
                 }
             }
@@ -69,7 +69,7 @@ pipeline {
 
                     echo "=== Running Tests with Coverage ==="
 
-                    npx vitest run --coverage
+                    bun run test:coverage
 
                     echo "=== Tests Passed ==="
                 '''

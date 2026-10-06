@@ -38,7 +38,10 @@ describe("posts reducer", () => {
     expect(reducer(undefined, fetchPosts.rejected(new Error("list failed"), "3", false)).error).toBe("list failed");
     expect(reducer(undefined, fetchPost.pending("4", post.id)).isPost).toBe(true);
     expect(reducer(undefined, fetchPost.fulfilled(post, "5", post.id)).post).toEqual(post);
+    expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [post] }, fetchPost.fulfilled(post, "5b", post.id)).posts).toEqual([post]);
+    expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [post] }, fetchPost.fulfilled({ ...post, id: 8 }, "5b", 8)).posts).toEqual([post]);
     expect(reducer(undefined, fetchPost.rejected(new Error("detail failed"), "6", post.id)).error).toBe("detail failed");
+    expect(reducer(undefined, fetchPosts.rejected(new Error("list failed"), "6b", false, "explicit")).error).toBe("explicit");
   });
 
   it("tracks all post mutations, updates stored posts, and resets completion flags", () => {
@@ -56,11 +59,14 @@ describe("posts reducer", () => {
     expect(reducer(undefined, editPost.pending("10", edit)).isPostChange).toBe(true);
     expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [post] }, editPost.fulfilled(edited, "11", edit)).posts).toEqual([edited]);
     expect(reducer(undefined, editPost.rejected(new Error("edit failed"), "12", edit)).error).toBe("edit failed");
+    expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [post] }, editPost.fulfilled({ ...edited, id: 99 }, "12b", edit)).posts).toEqual([post]);
 
     const cover = { id: post.id, cover: new File(["cover"], "cover.png", { type: "image/png" }) };
     expect(reducer(undefined, editPostCover.pending("13", cover)).isPostChangeCover).toBe(true);
     expect(reducer(undefined, editPostCover.fulfilled(edited, "14", cover)).isPostChangedCover).toBe(true);
+    expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [post] }, editPostCover.fulfilled(edited, "14b", cover)).posts).toEqual([edited]);
     expect(reducer(undefined, editPostCover.rejected(new Error("cover failed"), "15", cover)).error).toBe("cover failed");
+    expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [post] }, editPostCover.fulfilled({ ...edited, id: 99 }, "15b", cover)).posts).toEqual([post]);
 
     expect(reducer(undefined, removePost.pending("16", post.id)).isPostDelete).toBe(true);
     expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [post], post }, removePost.fulfilled(post.id, "17", post.id))).toMatchObject({
@@ -69,10 +75,13 @@ describe("posts reducer", () => {
       post: null,
     });
     expect(reducer(undefined, removePost.rejected(new Error("remove failed"), "18", post.id)).error).toBe("remove failed");
+    expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [post], post: { ...post, id: 8 } }, removePost.fulfilled(post.id, "18b", post.id)).post).toEqual({ ...post, id: 8 });
 
     const like = { id: post.id, like: true };
     expect(reducer(undefined, changePostLike.pending("19", like)).isPostLike).toBe(true);
     expect(reducer(undefined, changePostLike.fulfilled(post, "20", like)).isPostLiked).toBe(true);
+    expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [post] }, changePostLike.fulfilled(post, "20c", like)).posts).toEqual([post]);
+    expect(reducer({ ...reducer(undefined, { type: "unknown" }), posts: [created] }, changePostLike.fulfilled(post, "20b", like)).posts).toEqual([created]);
     expect(reducer(undefined, changePostLike.rejected(new Error("like failed"), "21", like)).error).toBe("like failed");
 
     const comment = { id: post.id, comment: "Nice!" };
