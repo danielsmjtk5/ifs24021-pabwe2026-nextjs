@@ -1,4 +1,3 @@
-
 pipeline {
 
     agent any
@@ -58,7 +57,7 @@ pipeline {
         stage('Test') {
             agent {
                 docker {
-                    image 'oven/bun:alpine'
+                    image 'node:24-alpine'
                     reuseNode true
                 }
             }
@@ -69,7 +68,7 @@ pipeline {
 
                     echo "=== Running Tests with Coverage ==="
 
-                    bun run test:coverage
+                    npx vitest run --coverage
 
                     echo "=== Tests Passed ==="
                 '''
@@ -210,9 +209,12 @@ pipeline {
                         -x ".env" \
                         -x ".env.*" \
                         -x "coverage/*" \
+                        -x ".next/*" \
+                        -x "out/*" \
                         -x ".trivy-cache/*" \
                         -x "latest-app.zip" \
-                        -x "trivy-results.sarif"
+                        -x "trivy-results.sarif" \
+                        -x ".docs/*"
 
                     echo "=== Application Package Created ==="
 
