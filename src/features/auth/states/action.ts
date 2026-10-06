@@ -3,15 +3,20 @@ import { putAccessToken } from "@/helpers/apiHelper";
 import { login, logout, register } from "../api/authApi";
 import type { AuthCredentials, RegisterCredentials } from "@/types";
 
+const getErrorMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
+
 export const isAuthLogin = createAsyncThunk(
   "auth/login",
   async (credentials: AuthCredentials, { rejectWithValue }) => {
     try {
       const result = await login(credentials);
-      putAccessToken(result.data.token);
+      if (result?.data?.token) {
+        putAccessToken(result.data.token);
+      }
       return result.data;
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : "Login gagal.");
+      return rejectWithValue(getErrorMessage(error, "Login gagal."));
     }
   },
 );
@@ -22,7 +27,7 @@ export const isAuthRegister = createAsyncThunk(
     try {
       return (await register(credentials)).message;
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : "Registrasi gagal.");
+      return rejectWithValue(getErrorMessage(error, "Registrasi gagal."));
     }
   },
 );
@@ -33,9 +38,9 @@ export const isAuthLogout = createAsyncThunk(
     try {
       const result = await logout();
       putAccessToken(null);
-      return result.message;
+      return result?.message ?? "Logout berhasil";
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : "Logout gagal.");
+      return rejectWithValue(getErrorMessage(error, "Logout gagal."));
     }
   },
 );
