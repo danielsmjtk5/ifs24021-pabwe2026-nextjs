@@ -375,7 +375,7 @@ describe("ui coverage suite", () => {
     expect(onSubmit).not.toHaveBeenCalled();
     const dialog = screen.getByRole("dialog", { name: "Draft" }) as HTMLDialogElement;
     expect(dialog.tagName).toBe("DIALOG");
-    fireEvent.click(dialog);
+    fireEvent.click(screen.getByRole("button", { name: "Tutup dialog" }));
     expect(onClose).toHaveBeenCalledTimes(1);
     fireEvent.click(screen.getByRole("button", { name: "Tutup" }));
     expect(onClose).toHaveBeenCalledTimes(2);
